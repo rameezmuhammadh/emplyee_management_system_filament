@@ -25,7 +25,9 @@ class CountryResource extends Resource
 
     protected static ?string $navigationGroup = 'System Management';
 
-    protected static ?string $slug = 'employee-countries';
+    // protected static ?string $slug = 'employee-countries';
+
+    protected static ?int $navigationSort = 1;
 
 
 
@@ -33,7 +35,20 @@ class CountryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Section::make('Country')
+                ->description('Put the country details in.')
+                ->schema([
+                Forms\Components\TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+                Forms\Components\TextInput::make('code')
+                ->required()
+                ->maxLength(3),
+                Forms\Components\TextInput::make('phonecode')
+                ->required()
+                ->numeric()
+                ->maxLength(5),
+                ])->columns(3)
             ]);
     }
 

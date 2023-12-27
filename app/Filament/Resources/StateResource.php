@@ -17,21 +17,33 @@ class StateResource extends Resource
 {
     protected static ?string $model = State::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
+
+    protected static ?string $navigationLabel = 'State';
+
+    protected static ?string $modelLabel = 'State';
 
     protected static ?string $navigationGroup = 'System Management';
+
+    protected static ?int $navigationSort = 2;
 
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('country_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Section::make('State')
+                ->description('Put the state details in.')
+                ->schema([
+                Forms\Components\Select::make('country_id')
+                    ->relationship(name: 'country', titleAttribute: 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                ])->columns(2)
             ]);
     }
 

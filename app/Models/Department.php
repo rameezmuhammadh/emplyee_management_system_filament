@@ -12,7 +12,7 @@ class Department extends Model
 
     protected $guarded = [];
 
-    public function employee () :HasMany
+    public function employees () :HasMany
     {
         return $this->hasMany(Employee::class);
     }

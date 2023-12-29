@@ -18,17 +18,18 @@ use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Indicator;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Notifications\Notification;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Section;
+use Illuminate\Contracts\Support\Htmlable;
 use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\EmployeeResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
-use Filament\Tables\Enums\FiltersLayout;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Support\Htmlable;
 
 class EmployeeResource extends Resource
 {
@@ -37,7 +38,7 @@ class EmployeeResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationGroup = 'Employee Management';
-    
+
     protected static ?string $recordTitleAttribute = 'first_name';
 
     public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
@@ -48,8 +49,8 @@ class EmployeeResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return [
-                'first_name', 'last_name', 'middle_name' 
-                //'country.name'
+            'first_name', 'last_name', 'middle_name'
+            //'country.name'
         ];
     }
 
@@ -72,7 +73,7 @@ class EmployeeResource extends Resource
 
     public static function getNavigationBadgeColor(): string|array|null
     {
-        return static::getModel()::count() > 5 ? 'warning' : 'success' ;
+        return static::getModel()::count() > 5 ? 'warning' : 'success';
     }
 
     public static function form(Form $form): Form
@@ -237,13 +238,20 @@ class EmployeeResource extends Resource
 
                         return $indicators;
                     }),
-                    //->columnSpan(2)->columns(2),
-                ])  // *,layout:FiltersLayout::AboveContent)->filtersFormColumns(2)
-                
-                
+                //->columnSpan(2)->columns(2),
+            ])  // *,layout:FiltersLayout::AboveContent)->filtersFormColumns(2)
+
+
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->successNotification(
+                        Notification::make()
+                            ->success()
+                            ->title('Employee deleted.')
+                            ->body('The Employee deleted successfully.')
+                    ),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

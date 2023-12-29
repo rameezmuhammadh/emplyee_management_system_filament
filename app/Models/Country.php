@@ -13,7 +13,7 @@ class Country extends Model
 
     protected $guarded = [];
 
-    public function state():HasMany
+    public function states():HasMany
     {
         return $this->hasMany(State::class);
     }

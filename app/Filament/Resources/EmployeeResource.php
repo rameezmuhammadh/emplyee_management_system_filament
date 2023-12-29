@@ -27,6 +27,8 @@ use App\Filament\Resources\EmployeeResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
 use Filament\Tables\Enums\FiltersLayout;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Support\Htmlable;
 
 class EmployeeResource extends Resource
 {
@@ -35,7 +37,35 @@ class EmployeeResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationGroup = 'Employee Management';
+    
+    protected static ?string $recordTitleAttribute = 'first_name';
 
+    public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
+    {
+        return $record->last_name;
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+                'first_name', 'last_name', 'middle_name' 
+                //'country.name'
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Country' => $record->country->name
+        ];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['country']);
+    }
+
+    
 
     public static function form(Form $form): Form
     {
@@ -242,8 +272,6 @@ class EmployeeResource extends Resource
                         TextEntry::make('city.name')->label('City Name'),
                         TextEntry::make('department.name')->label('Department Name'),
                     ])->columns(2)
-
-
             ]);
     }
 

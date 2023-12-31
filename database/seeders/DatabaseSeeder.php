@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Department;
 use Illuminate\Database\Seeder;
-use Database\Seeders\CitySeeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,11 +17,12 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Rameez',
-        //     'email' => 'rameez@mail.com',
-        //     'is_admin' => true
-        // ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Rameez',
+            'email' => 'rameez@mail.com',
+            'is_admin' => true,
+            'password' => Hash::make('12345678'),
+        ]);
 
         $this->call(CountrySeeder::class);
         $this->call(StateSeeder::class);

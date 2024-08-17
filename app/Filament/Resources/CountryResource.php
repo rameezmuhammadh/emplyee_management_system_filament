@@ -70,7 +70,7 @@ class CountryResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phonecode')
-                ->label('Phone Code')
+                    ->label('Phone Code')
                     ->numeric(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -122,7 +122,7 @@ class CountryResource extends Resource
         return [
             'index' => Pages\ListCountries::route('/'),
             'create' => Pages\CreateCountry::route('/create'),
-           // 'view' => Pages\ViewCountry::route('/{record}'),
+            // 'view' => Pages\ViewCountry::route('/{record}'),
             'edit' => Pages\EditCountry::route('/{record}/edit'),
         ];
     }

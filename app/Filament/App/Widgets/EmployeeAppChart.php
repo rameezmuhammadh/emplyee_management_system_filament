@@ -17,23 +17,23 @@ class EmployeeAppChart extends ChartWidget
 
     protected function getData(): array
     {
-                $data = Trend::query(Employee::query()->whereBelongsTo(Filament::getTenant()))
-                ->between(
-                    start: now()->startOfMonth(),
-                    end: now()->endOfMonth(),
-                )
-                ->perDay()
-                ->count();
-         
-            return [
-                'datasets' => [
-                    [
-                        'label' => 'Employees',
-                        'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
-                    ],
+        $data = Trend::query(Employee::query()->whereBelongsTo(Filament::getTenant()))
+            ->between(
+                start: now()->startOfMonth(),
+                end: now()->endOfMonth(),
+            )
+            ->perDay()
+            ->count();
+
+        return [
+            'datasets' => [
+                [
+                    'label' => 'Employees',
+                    'data' => $data->map(fn(TrendValue $value) => $value->aggregate),
                 ],
-                'labels' => $data->map(fn (TrendValue $value) => $value->date),
-            ];
+            ],
+            'labels' => $data->map(fn(TrendValue $value) => $value->date),
+        ];
     }
 
     protected function getType(): string

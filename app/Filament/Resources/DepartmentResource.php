@@ -39,7 +39,7 @@ class DepartmentResource extends Resource
 
     public static function getNavigationBadgeColor(): string|array|null
     {
-        return static::getModel()::count() > 5 ? 'warning' : 'success' ;
+        return static::getModel()::count() > 5 ? 'warning' : 'success';
     }
 
     public static function form(Form $form): Form
@@ -114,7 +114,7 @@ class DepartmentResource extends Resource
         return [
             'index' => Pages\ListDepartments::route('/'),
             'create' => Pages\CreateDepartment::route('/create'),
-           // 'view' => Pages\ViewDepartment::route('/{record}'),
+            // 'view' => Pages\ViewDepartment::route('/{record}'),
             'edit' => Pages\EditDepartment::route('/{record}/edit'),
         ];
     }

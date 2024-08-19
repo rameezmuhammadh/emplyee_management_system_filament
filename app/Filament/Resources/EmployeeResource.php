@@ -49,7 +49,9 @@ class EmployeeResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return [
-            'first_name', 'last_name', 'middle_name'
+            'first_name',
+            'last_name',
+            'middle_name'
             //'country.name'
         ];
     }
@@ -127,16 +129,16 @@ class EmployeeResource extends Resource
                             })
                             ->required(),
                         Forms\Components\Select::make('state_id')
-                            ->options(fn (Get $get): Collection => State::query()
+                            ->options(fn(Get $get): Collection => State::query()
                                 ->where('country_id', $get('country_id'))
                                 ->pluck('name', 'id'))
                             ->searchable()
                             ->preload()
                             ->live()
-                            ->afterStateUpdated(fn (Set $set) => $set('city_id', null))
+                            ->afterStateUpdated(fn(Set $set) => $set('city_id', null))
                             ->required(),
                         Forms\Components\Select::make('city_id')
-                            ->options(fn (Get $get): Collection => City::query()
+                            ->options(fn(Get $get): Collection => City::query()
                                 ->where('state_id', $get('state_id'))
                                 ->pluck('name', 'id'))
                             ->searchable()
@@ -218,11 +220,11 @@ class EmployeeResource extends Resource
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     })
                     ->indicateUsing(function (array $data): array {

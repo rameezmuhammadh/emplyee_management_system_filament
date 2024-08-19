@@ -37,17 +37,17 @@ class CityResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('City')
-                ->description('Put the city details in.')
-                ->schema([
-                    Forms\Components\Select::make('state_id')
-                    ->relationship(name: 'State', titleAttribute: 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                ])->columns(2)
+                    ->description('Put the city details in.')
+                    ->schema([
+                        Forms\Components\Select::make('state_id')
+                            ->relationship(name: 'State', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                    ])->columns(2)
             ]);
     }
 
@@ -56,8 +56,8 @@ class CityResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('state.name')
-                ->label('State Name')   
-                ->searchable()
+                    ->label('State Name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
@@ -109,7 +109,7 @@ class CityResource extends Resource
         return [
             'index' => Pages\ListCities::route('/'),
             'create' => Pages\CreateCity::route('/create'),
-        //    'view' => Pages\ViewCity::route('/{record}'),
+            //    'view' => Pages\ViewCity::route('/{record}'),
             'edit' => Pages\EditCity::route('/{record}/edit'),
         ];
     }

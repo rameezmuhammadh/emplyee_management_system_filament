@@ -16,24 +16,23 @@ class UserAdminChart extends ChartWidget
     protected function getData(): array
     {
 
-            $data = Trend::model(User::class)
+        $data = Trend::model(User::class)
             ->between(
                 start: now()->startOfMonth(),
                 end: now()->endOfMonth(),
             )
             ->perDay()
             ->count();
-     
+
         return [
             'datasets' => [
                 [
                     'label' => 'Users',
-                    'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
+                    'data' => $data->map(fn(TrendValue $value) => $value->aggregate),
                 ],
             ],
-            'labels' => $data->map(fn (TrendValue $value) => $value->date),
+            'labels' => $data->map(fn(TrendValue $value) => $value->date),
         ];
-
     }
 
     protected function getType(): string

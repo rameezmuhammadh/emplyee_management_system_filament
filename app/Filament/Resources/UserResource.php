@@ -21,7 +21,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'User Management';
 
-    
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
@@ -29,7 +29,7 @@ class UserResource extends Resource
 
     public static function getNavigationBadgeColor(): string|array|null
     {
-        return static::getModel()::count() > 5 ? 'warning' : 'success' ;
+        return static::getModel()::count() > 5 ? 'warning' : 'success';
     }
 
 
